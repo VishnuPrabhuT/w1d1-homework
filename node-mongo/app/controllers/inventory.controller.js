@@ -10,6 +10,8 @@ exports.createInventory = (req, res) => {
         status: req.body.status,
     });
 
+    console.log(inventory);
+
     inventory
         .save()
         .then((data) => {
@@ -24,9 +26,12 @@ exports.createInventory = (req, res) => {
 };
 
 exports.getInventory = (req, res) => {
+    console.log(req.params.id, Inventory.findById(req.params.id));
+
     Inventory.findById(req.params.id)
-        .select("-__v")
+        .select("-__v-_id")
         .then((inventory) => {
+            console.log(inventory);
             res.status(200).json(inventory);
         })
         .catch((err) => {
@@ -43,6 +48,7 @@ exports.getInventory = (req, res) => {
             });
         });
 };
+
 exports.inventories = (req, res) => {
     Inventory.find()
         .select("-__v")
@@ -60,6 +66,7 @@ exports.inventories = (req, res) => {
 };
 
 exports.deleteInventory = (req, res) => {
+    console.log(req.params);
     Inventory.findByIdAndRemove(req.params.id)
         .select("-__v-_id")
         .then((inventory) => {
@@ -82,7 +89,7 @@ exports.deleteInventory = (req, res) => {
 
 exports.updateInventory = (req, res) => {
     Inventory.findByIdAndUpdate(
-        req.params.id,
+        req.body._id,
         {
             prodname: req.body.prodname,
             qty: req.body.qty,

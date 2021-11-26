@@ -1,13 +1,16 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
+app.use(cors());
 app.use(bodyParser.json());
+// app.use(express.static("public"));
 
 require("./app/models/inventory.model.js");
 
 require("dotenv").config();
-const mongoose = require("mongoose");
 
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -28,5 +31,5 @@ const server = app.listen(8000, function () {
     const host = server.address().address;
     const port = server.address().port;
 
-    console.log("App listening at http://%s:%s", host, port);
+    console.log("App listening at http://localhost:8000");
 });

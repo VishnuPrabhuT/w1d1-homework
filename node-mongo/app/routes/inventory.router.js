@@ -1,3 +1,5 @@
+const cors = require("cors");
+
 module.exports = function (app) {
     var inventories = require("../controllers/inventory.controller.js");
 
